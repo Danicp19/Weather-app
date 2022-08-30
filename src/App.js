@@ -5,6 +5,8 @@ import Cards from './components/Cards.jsx';
 import About from './components/About.jsx';
 import Ciudad from './components/Detail';
 import { Route, Routes } from 'react-router-dom';
+import { data } from 'autoprefixer';
+import fetchCoord from "./services/fetchCoords"
 
 const apiKey = '4ae2636d8dfbdc3044bede63951a019b';
 
@@ -14,6 +16,9 @@ function App() {
     setCities(oldCities => oldCities.filter(c => c.id !== id));
   }
   function onSearch(ciudad) {
+    if(cities.length>3){
+      alert("No more cities can be added")
+    }
     //Llamado a la API del clima
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}&units=metric`)
       .then(r => r.json())
@@ -34,7 +39,7 @@ function App() {
           };
           setCities(oldCities => [...oldCities, ciudad]);
         } else {
-          alert("Ciudad no encontrada");
+          alert("City ​​not found");
         }
       });
   }
@@ -46,6 +51,16 @@ function App() {
       return null;
     }
   }
+
+  React.useEffect(()=>{
+    if(navigator.geolocation)
+    navigator.geolocation.getCurrentPosition((pos)=>{
+      fetchCoord(pos.coords.latitude,pos.coords.longitude,setCities)
+    })
+  },[])
+
+
+
   return (
     <div  >
       <div className="h-screen w-full blur-sm font-bold bg-[url('./assets/background.jpeg')] bg-cover backdrop-brightness-50 brightness-90 bg-center  " />
