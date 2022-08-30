@@ -54,7 +54,7 @@ function App() {
 
       {/* grid grid-cols-[400px_minmax(150px,_1fr)_0px] grid-rows-1 */}
       
-        <div className="flex flex-col w-1/3  backdrop-blur bg-white bg-opacity-20 " >
+        <div className="flex flex-col w-1/3  backdrop-blur-md bg-gray-300 bg-opacity-30 " >
           <Nav onSearch={onSearch} />
           < Routes>
 
