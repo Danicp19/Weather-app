@@ -1,24 +1,78 @@
-import logo from './logo.svg';
-import './App.css';
+
+import React, { useState } from 'react';
+import Nav from './components/Nav';
+import Cards from './components/Cards.jsx';
+import About from './components/About.jsx';
+import Ciudad from './components/Detail';
+import { Route, Routes } from 'react-router-dom';
+
+const apiKey = '4ae2636d8dfbdc3044bede63951a019b';
 
 function App() {
+  const [cities, setCities] = useState([]);
+  function onClose(id) {
+    setCities(oldCities => oldCities.filter(c => c.id !== id));
+  }
+  function onSearch(ciudad) {
+    //Llamado a la API del clima
+    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}`)
+      .then(r => r.json())
+      .then((recurso) => {
+        if (recurso.main !== undefined) {
+          const ciudad = {
+            min: Math.round(recurso.main.temp_min),
+            max: Math.round(recurso.main.temp_max),
+            img: recurso.weather[0].icon,
+            id: recurso.id,
+            wind: recurso.wind.speed,
+            temp: recurso.main.temp,
+            name: recurso.name,
+            weather: recurso.weather[0].main,
+            clouds: recurso.clouds.all,
+            latitud: recurso.coord.lat,
+            longitud: recurso.coord.lon
+          };
+          setCities(oldCities => [...oldCities, ciudad]);
+        } else {
+          alert("Ciudad no encontrada");
+        }
+      });
+  }
+  function onFilter(ciudadId) {
+    let ciudad = cities.filter(c => c.id === parseInt(ciudadId));
+    if (ciudad.length > 0) {
+      return ciudad[0];
+    } else {
+      return null;
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div  >
+      <div className="h-screen w-full blur-sm font-bold bg-[url('./assets/background.jpeg')] bg-cover backdrop-brightness-50 brightness-90 bg-center  " />
+
+      <div className="bg-[url('./assets/background.jpeg')] bg-cover  bg-center  w-3/4 h-3/4 overflow-hidden m-[12%] absolute top-0 lg:mt-[8%] rounded-3xl shadow-2xl flex justify-end ">
+
+      {/* grid grid-cols-[400px_minmax(150px,_1fr)_0px] grid-rows-1 */}
+      
+        <div className="flex flex-col w-1/3  backdrop-blur bg-white bg-opacity-20 " >
+          <Nav onSearch={onSearch} />
+          < Routes>
+
+            <Route path='/about'
+              element={<About />}
+            />
+
+            <Route path='/' element={<Cards
+              cities={cities}
+              onClose={onClose}
+            />}
+
+            />
+          </Routes>
+        </div>
+
+      </div>
+    </div >
   );
 }
 
