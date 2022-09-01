@@ -5,10 +5,8 @@ export default function Cards({ cities, onClose }) {
   return (
     <>
       <div className=''>
-
         {cities.length > 0 ? (
           <>
-        
             {cities.map(c => <Card
               key={c.id}
               max={c.max}

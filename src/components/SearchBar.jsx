@@ -8,14 +8,14 @@ export default function SearchBar({ onSearch }) {
       onSearch(city);
       setCity("")
     }}>
-        <input className="w-32 bg-transparent text-white placeholder-gray-200 text-xl"
-          type="text"
-          placeholder="Add a city ..."
-          value={city}
-          onChange={e => setCity(e.target.value)}
-        />
-        <button className="text-gray-200 text-2xl " type="submit" value="search"><IoSearch /> </button>
-      
+      <input className="w-32 bg-transparent text-white placeholder-gray-200 text-xl"
+        type="text"
+        placeholder="Add a city ..."
+        value={city}
+        onChange={e => setCity(e.target.value)}
+      />
+      <button className="text-gray-200 text-2xl " type="submit" value="search"><IoSearch /> </button>
+
     </form>
   );
 }
