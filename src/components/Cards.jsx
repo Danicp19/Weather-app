@@ -8,13 +8,7 @@ export default function Cards({ cities, onClose }) {
 
         {cities.length > 0 ? (
           <>
-            {/* <Card
-              primary
-              max={cities[cities.length - 1].max}
-              min={cities[cities.length - 1].min}
-              name={cities[cities.length - 1].name}
-              img={cities[cities.length - 1].img}
-            /> */}
+        
             {cities.map(c => <Card
               key={c.id}
               max={c.max}

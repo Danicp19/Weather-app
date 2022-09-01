@@ -68,7 +68,7 @@ function App() {
       <div className="h-screen w-full blur-sm font-bold bg-[url('./assets/background.jpeg')] bg-cover backdrop-brightness-50 brightness-90 bg-center  " />
 
       <div className="bg-[url('./assets/background.jpeg')] bg-cover  bg-center  w-3/4 h-3/4 overflow-hidden m-[12%] absolute top-0 lg:mt-[8%] rounded-3xl shadow-2xl flex justify-end ">
-        <div className="flex absolute bottom-2 left-6">
+        <div className="flex absolute bottom-2 left-8">
         
           {cities.length > 0 ? (
 
